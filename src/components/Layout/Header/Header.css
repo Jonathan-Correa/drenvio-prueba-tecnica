@@ -1,0 +1,10 @@
+header {
+  display: flex;
+  justify-content: center;
+}
+
+nav {
+  width: 100vw;
+  padding-left: 3rem;
+  background-color: white;
+}
