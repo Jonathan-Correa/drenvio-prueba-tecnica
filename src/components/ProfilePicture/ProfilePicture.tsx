@@ -1,13 +1,11 @@
-import './ProfilePicture.css';
+import "./ProfilePicture.css";
 
-const ProfilePicture = () => {
-  return (
-    <img
-      className="profile-picture"
-      src="https://randomuser.me/api/portraits/men/10.jpg"
-      alt="Profile Picture"
-    />
-  );
+type Props = {
+  url: string;
+};
+
+const ProfilePicture = ({ url }: Props) => {
+  return <img className="profile-picture" src={url} alt="Profile" />;
 };
 
 export default ProfilePicture;
