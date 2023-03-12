@@ -6,8 +6,13 @@ type UserInfoResponse = {
   data: User | null;
 };
 
-export const getUserInfo = async function (): Promise<UserInfoResponse> {
-  const response = await fetch("https://randomuser.me/api/");
+export const getUserInfo = async function (
+  abortController?: AbortController
+): Promise<UserInfoResponse> {
+  const response = await fetch("https://randomuser.me/api/", {
+    signal: abortController?.signal,
+  });
+
   const json = await response.json();
 
   if (json.error != null) {

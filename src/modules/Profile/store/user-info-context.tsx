@@ -4,10 +4,14 @@ import Loading from "../../shared/pages/Loading/Loading";
 import { User } from "../models/User";
 
 export type UserInfoContextType = {
-  user: User | null
+  user: User | null;
+  searchUser: () => Promise<void>;
 };
 
-const UserInfoContext = createContext<UserInfoContextType>({user: null});
+const UserInfoContext = createContext<UserInfoContextType>({
+  user: null,
+  searchUser: async () => {},
+});
 
 type Props = {
   children: JSX.Element | JSX.Element[];
@@ -18,20 +22,24 @@ export function UserInfoProvider({ children }: Props) {
   const [userIsLoading, setUserIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchUserInfo();
+    const abortController = new AbortController();
+    searchUser(abortController);
+
+    return () => abortController.abort();
   }, []);
 
-  async function fetchUserInfo() {
-    const response = await getUserInfo();
+  async function searchUser(abortController?: AbortController) {
+    setUserIsLoading(true);
+    const response = await getUserInfo(abortController);
 
     setTimeout(() => {
       setUser(response.data);
       setUserIsLoading(false);
-    }, 1000);
+    }, 500);
   }
 
   return (
-    <UserInfoContext.Provider value={{ user }}>
+    <UserInfoContext.Provider value={{ user, searchUser }}>
       {userIsLoading ? <Loading /> : children}
     </UserInfoContext.Provider>
   );

@@ -1,7 +1,7 @@
 import "./App.css";
 import Header from "./components/Layout/Header/Header";
+import Profile from "./modules/Profile/pages/Profile/Profile";
 import { UserInfoProvider } from "./modules/Profile/store/user-info-context";
-import Profile from "./pages/Profile/Profile";
 
 function App() {
   return (
